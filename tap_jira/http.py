@@ -165,6 +165,9 @@ class Client():
         self.login_timer = None
         self.timeout = get_request_timeout(config)
 
+        # Disable SSL verification globally
+        self.session.verify = False
+        
         # Assign False for cloud Jira instance
         self.is_on_prem_instance = False
 
