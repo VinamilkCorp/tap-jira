@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+import ssl
 import json
 import singer
 from singer import utils
@@ -112,6 +113,9 @@ def sync():
 
 @singer.utils.handle_top_exception(LOGGER)
 def main():
+    # Ignore SSL verification
+    ssl._create_default_https_context = ssl._create_unverified_context
+
     args = get_args()
 
     jira_config = args.config
