@@ -21,6 +21,9 @@ def get_mock_http_response(status_code, content={}):
     response.status_code = status_code
     response.headers = {}
     response._content = contents.encode()
+    response.url = ""
+    response.request = requests.Request()
+    response.request.method = ""
     return response
 
 @mock.patch('tap_jira.get_args')
@@ -41,7 +44,7 @@ class TestBasicAuthInDiscoverMode(unittest.TestCase):
             self.assertEqual(e.response.status_code, 401)
             expected_error_message = "HTTP-error-code: 401, Error: Invalid authorization credentials."
             # Verifying the message formed for the custom exception
-            self.assertEquals(str(e), expected_error_message)
+            self.assertEqual(str(e), expected_error_message)
 
         self.assertEqual(mocked_discover.call_count, 0)
 
